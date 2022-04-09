@@ -36,7 +36,8 @@
                             </el-input>
                         </el-form-item>
                         <el-form-item>
-                            <el-button :loading="this.isload" type="primary" @click="submitForm('ruleForm')" plain>解析</el-button>
+                            <el-button :loading="this.isload" type="primary" @click="submitForm('ruleForm')" plain>解析
+                            </el-button>
                         </el-form-item>
                     </el-form>
 
@@ -48,12 +49,12 @@
                     </el-divider>
 
                     <el-descriptions class="margin-top" title="文件详情" :column="1" :size="size" border
-                        direction="horizontal"
-                        style="margin-top: 100px;"
-                        >
+                        direction="horizontal" style="margin-top: 100px;">
                         <template slot="extra">
-                            <el-button type="primary" size="small" @click="xldown()" round>迅雷下载<i class="el-icon-s-promotion el-icon--right"></i></el-button>
-                            <el-button type="primary" size="small" @click="fmdowm()" round>飞猫云下载<i class="el-icon-download el-icon--right"></i></el-button>
+                            <el-button type="primary" size="small" @click="xldown()" round>迅雷下载<i
+                                    class="el-icon-s-promotion el-icon--right"></i></el-button>
+                            <el-button type="primary" size="small" @click="fmdowm()" round>飞猫云下载<i
+                                    class="el-icon-download el-icon--right"></i></el-button>
                         </template>
                         <el-descriptions-item>
                             <template slot="label">
@@ -86,10 +87,12 @@
                     <!-- 底部版权信息 -->
                     <div class="footer">
                         <!-- author -->
-                        <el-link :underline="false" href="https://www.ilzya.com/" target="_blank">@2022 Copyright</el-link>
+                        <el-link :underline="false" href="https://www.ilzya.com/" target="_blank">@2022 Copyright
+                        </el-link>
                         |
                         <!-- 备案信息 -->
-                        <el-link :underline="false" href="https://beian.miit.gov.cn/" target="_blank">ICP备XXXXXXXX号</el-link>
+                        <el-link :underline="false" href="https://beian.miit.gov.cn/" target="_blank">ICP备XXXXXXXX号
+                        </el-link>
                         |
                         <!--  -->
 
@@ -130,11 +133,16 @@
                     url: 'null',
                 },
                 url: '',
-                isload:false,
+                isload: false,
             };
+        },
+        mounted: function(){
+            //欢迎语
+            this.open()
         },
         methods: {
             handleSelect(key, keyPath) {
+                //导航跳转
                 switch (key) {
                     case '1':
                         location.href = '/';
@@ -145,31 +153,36 @@
                         break;
 
                     case '3':
-                    window.open('https://jq.qq.com/?_wv=1027&k=R3uJbJKZ');
-                    break;
+                        window.open('https://jq.qq.com/?_wv=1027&k=R3uJbJKZ');
+                        break;
 
                 }
 
 
                 console.log(key, keyPath);
             },
+            open() {
+                const h = this.$createElement;
+                this.$notify({
+                    title: '欢迎你',
+                    message: h('i', { style: 'color: teal' }, '欢迎来到本站,CTRL+D收藏不迷路:)')
+                });
+            },
             submitForm(formName) {
                 this.isload = true;
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
-                        if(this.url == ''){
+                        if (this.url == '') {
                             this.$message.error('请输入文件链接！');
                             this.isload = false;
                             return;
                         }
-
-
-
+                        //请求php文件,php文件用来统计,无特定需求无需修改
                         $.ajax({
                             url: '/http/api/resolve.php',
                             type: 'POST',
                             contentType: "application/json",
-                            data:'{"link": "'+this.url+'"}',
+                            data: '{"link": "' + this.url + '"}',
                             success: (res) => {
                                 res = JSON.parse(res);
                                 if (res.success == 'true') {
@@ -181,11 +194,11 @@
                                         message: res.message,
                                         type: 'success'
                                     });
-                                }else if(res.success == 'false'){
+                                } else if (res.success == 'false') {
                                     this.$message.error(res.message);
                                 }
                             },
-                            error:(res)=>{
+                            error: (res) => {
                                 this.$message.error(res);
                             }
                         })
@@ -197,14 +210,6 @@
                     this.isload = false;
                 });
             },
-            open() {
-                const h = this.$createElement;
-
-                this.$notify({
-                    title: '欢迎你',
-                    message: h('i', { style: 'color: teal' }, '该站仅用来测试,请勿用于下载非法资源')
-                });
-            },
             xldown() {
                 if (this.file.durl == 'null' || this.file.durl == '') {
                     this.$message({
@@ -212,46 +217,48 @@
                         type: 'warning'
                     });
                 } else {
+                    //迅雷sdk新建下载链接
                     thunderLink.newTask({
                         downloadDir: '', // 指定当前任务的下载目录名称，迅雷会在用户剩余空间最大的磁盘根目录中创建这个目录。【若不填此项，会下载到用户默认下载目录】
                         tasks: [{
                             name: this.file.name, // 指定下载文件名（含扩展名）。【若不填此项，将根据下载 URL 自动获取文件名】
                             url: this.file.durl // 指定下载地址【必填项】
                         }],
-                        referer: this.url,   //来源地址,防盗链
+                        referer: this.url,  //设置referer,防盗链
                     });
 
                 }
 
             },
-            fmdowm(){
+            fmdowm() {
+                //飞猫云不需要针对referer特定设置,所以window.open就可以
                 if (this.file.durl == 'null' || this.file.durl == '') {
                     this.$message({
                         message: '无法获取下载链接,请确保您已经解析',
                         type: 'warning'
                     });
-                }else{
+                } else {
                     window.open(this.file.durl);
-                } 
+                }
             }
         }
     })
 
-    $(function get_hitokoto(){
-                $.ajax({
-                    url:'https://v1.hitokoto.cn/?encode=text&c=d',
-                    type:'post',
-                    success:(res)=>{
-                        $('#hitokoto').html(res);
-                    },
-                    error:(res)=>{
-                        $('#hitokoto').html('一言获取失败');
-                    }
+    $(function get_hitokoto() {
+        //一言接口
+        $.ajax({
+            url: 'https://v1.hitokoto.cn/?encode=text&c=d',
+            type: 'post',
+            success: (res) => {
+                $('#hitokoto').html(res);
+            },
+            error: (res) => {
+                $('#hitokoto').html('一言获取失败');
+            }
 
 
-                })
-            })
-
+        })
+    })
 
 </script>
 
