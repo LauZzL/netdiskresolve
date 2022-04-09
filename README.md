@@ -17,7 +17,7 @@
 
 ![](https://s1.ax1x.com/2022/04/09/LPRsZq.png)
 
-## 授权
+## 关于我
 
 联系博主：[call](https://jq.qq.com/?_wv=1027&k=9VuiaL86)
 
