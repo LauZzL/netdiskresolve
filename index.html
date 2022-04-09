@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>空城里-网赚网盘解析</title>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="/static/wp.min.css">
+</head>
+
+<body>
+    <div id="app">
+        <el-row :gutter="20">
+            <el-col :span="8" :offset="8">
+                <div class="grid-content bg-purple">
+
+                    <el-menu :default-active="activeIndex" class="el-menu-demo" text-color='#222222' close=""
+                        active-text-color='#1f84e0' mode="horizontal" @select="handleSelect">
+                        <el-menu-item class="el-menu-item" icon='el-icon-caret-top' index="1">首页<i
+                                v-if="activeIndex=='1'" class="el-icon-caret-top"></i></el-menu-item>
+                        <el-menu-item index="2">博客 <i class="el-icon-caret-top" v-if="activeIndex=='2'"></i>
+                        </el-menu-item>
+                        <el-menu-item index="3">交流群 <i class="el-icon-caret-top" v-if="activeIndex=='2'"></i>
+                        </el-menu-item>
+                    </el-menu>
+
+
+
+
+                    <el-form :model="ruleForm" status-icon ref="ruleForm" label-width="100px" class="demo-ruleForm">
+                        <el-form-item label="网盘地址" prop="link">
+                            <el-input id="link" name="link" v-model="url" autocomplete="off">
+                            </el-input>
+                        </el-form-item>
+                        <el-form-item>
+                            <el-button :loading="this.isload" type="primary" @click="submitForm('ruleForm')" plain>解析</el-button>
+                        </el-form-item>
+                    </el-form>
+
+                    <!-- 分割线 -->
+                    <el-divider id="splitline" content-position="right">
+                        <!-- <el-link type="primary" :underline="false" href="https://www.ilzya.com/">空城里</el-link> -->
+                        <!-- 一言 -->
+                        <span id="hitokoto"></span>
+                    </el-divider>
+
+                    <el-descriptions class="margin-top" title="文件详情" :column="1" :size="size" border
+                        direction="horizontal"
+                        style="margin-top: 100px;"
+                        >
+                        <template slot="extra">
+                            <el-button type="primary" size="small" @click="xldown()" round>迅雷下载<i class="el-icon-s-promotion el-icon--right"></i></el-button>
+                            <el-button type="primary" size="small" @click="fmdowm()" round>飞猫云下载<i class="el-icon-download el-icon--right"></i></el-button>
+                        </template>
+                        <el-descriptions-item>
+                            <template slot="label">
+                                文件名
+                            </template>
+                            <el-tag size="small">{{file.name}}</el-tag>
+                        </el-descriptions-item>
+                        <el-descriptions-item>
+                            <template slot="label">
+                                文件ID
+                            </template>
+                            <el-tag size="small">{{file.id}}</el-tag>
+                        </el-descriptions-item>
+                        <el-descriptions-item>
+                            <template slot="label">
+                                文件大小
+                            </template>
+                            <el-tag size="small">{{file.size}}</el-tag>
+                        </el-descriptions-item>
+                        <el-descriptions-item>
+                            <template slot="label">
+                                网盘名称
+                            </template>
+                            <el-tag size="small">null</el-tag>
+                        </el-descriptions-item>
+
+                    </el-descriptions>
+
+
+                    <!-- 底部版权信息 -->
+                    <div class="footer">
+                        <!-- author -->
+                        <el-link :underline="false" href="https://www.ilzya.com/" target="_blank">@2022 Copyright</el-link>
+                        |
+                        <!-- 备案信息 -->
+                        <el-link :underline="false" href="https://beian.miit.gov.cn/" target="_blank">ICP备XXXXXXXX号</el-link>
+                        |
+                        <!--  -->
+
+                    </div>
+
+
+                </div>
+            </el-col>
+        </el-row>
+    </div>
+</body>
+<!-- import Vue before Element -->
+<script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+<!-- import JavaScript -->
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<!-- import thunder sdk -->
+<script src="https://open.thunderurl.com/thunder-link.js"></script>
+<!-- import jquery -->
+<script src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/jquery/2.2.4/jquery.min.js"></script>
+
+<script>
+
+    new Vue({
+        el: '#app',
+        data() {
+            return {
+                activeIndex: '1',
+                activeIndex2: '1',
+                ruleForm: {
+
+                },
+                size: '',
+                file: {
+                    id: 'null',
+                    name: 'null',
+                    size: 'null',
+                    durl: 'null',
+                    url: 'null',
+                },
+                url: '',
+                isload:false,
+            };
+        },
+        methods: {
+            handleSelect(key, keyPath) {
+                switch (key) {
+                    case '1':
+                        location.href = '/';
+                        break;
+
+                    case '2':
+                        window.open('https://www.ilzya.com/');
+                        break;
+
+                    case '3':
+                    window.open('https://jq.qq.com/?_wv=1027&k=R3uJbJKZ');
+                    break;
+
+                }
+
+
+                console.log(key, keyPath);
+            },
+            submitForm(formName) {
+                this.isload = true;
+                this.$refs[formName].validate((valid) => {
+                    if (valid) {
+                        if(this.url == ''){
+                            this.$message.error('请输入文件链接！');
+                            this.isload = false;
+                            return;
+                        }
+
+
+
+                        $.ajax({
+                            url: '/http/api/resolve.php',
+                            type: 'POST',
+                            contentType: "application/json",
+                            data:'{"link": "'+this.url+'"}',
+                            success: (res) => {
+                                res = JSON.parse(res);
+                                if (res.success == 'true') {
+                                    this.file.name = res.fileName;
+                                    this.file.size = res.fileSize;
+                                    this.file.id = res.fileId;
+                                    this.file.durl = res.durl;
+                                    this.$message({
+                                        message: res.message,
+                                        type: 'success'
+                                    });
+                                }else if(res.success == 'false'){
+                                    this.$message.error(res.message);
+                                }
+                            },
+                            error:(res)=>{
+                                this.$message.error(res);
+                            }
+                        })
+                    } else {
+                        console.log('error submit!!');
+                        this.isload = false;
+                        return false;
+                    }
+                    this.isload = false;
+                });
+            },
+            open() {
+                const h = this.$createElement;
+
+                this.$notify({
+                    title: '欢迎你',
+                    message: h('i', { style: 'color: teal' }, '该站仅用来测试,请勿用于下载非法资源')
+                });
+            },
+            xldown() {
+                if (this.file.durl == 'null' || this.file.durl == '') {
+                    this.$message({
+                        message: '无法获取下载链接,请确保您已经解析',
+                        type: 'warning'
+                    });
+                } else {
+                    thunderLink.newTask({
+                        downloadDir: '', // 指定当前任务的下载目录名称，迅雷会在用户剩余空间最大的磁盘根目录中创建这个目录。【若不填此项，会下载到用户默认下载目录】
+                        tasks: [{
+                            name: this.file.name, // 指定下载文件名（含扩展名）。【若不填此项，将根据下载 URL 自动获取文件名】
+                            url: this.file.durl // 指定下载地址【必填项】
+                        }],
+                        referer: this.file.url,
+                    });
+
+                }
+
+            },
+            fmdowm(){
+                if (this.file.durl == 'null' || this.file.durl == '') {
+                    this.$message({
+                        message: '无法获取下载链接,请确保您已经解析',
+                        type: 'warning'
+                    });
+                }else{
+                    window.open(this.file.durl);
+                } 
+            }
+        }
+    })
+
+    $(function get_hitokoto(){
+                $.ajax({
+                    url:'https://v1.hitokoto.cn/?encode=text&c=d',
+                    type:'post',
+                    success:(res)=>{
+                        $('#hitokoto').html(res);
+                    },
+                    error:(res)=>{
+                        $('#hitokoto').html('一言获取失败');
+                    }
+
+
+                })
+            })
+
+
+</script>
+
+</html>

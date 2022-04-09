@@ -1,0 +1,33 @@
+html,body{
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+}
+.el-menu-demo .el-menu-item{
+    border-bottom-color:#ffffff!important;
+    font-size: 16px;
+ 
+}
+.el-icon-caret-top{
+    position: absolute;
+    bottom: -8px;
+    left: 34%;
+    color: #1F51A9!important;
+}
+.el-form {
+    position: relative;
+    margin-top: 20px;
+    align-items: center;
+}
+#link{
+    width: 333px;
+}
+
+.footer {
+    position: fixed;
+    text-align: center;
+    line-height: 35px;
+    bottom:0px;
+}
