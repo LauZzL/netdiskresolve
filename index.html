@@ -218,7 +218,7 @@
                             name: this.file.name, // 指定下载文件名（含扩展名）。【若不填此项，将根据下载 URL 自动获取文件名】
                             url: this.file.durl // 指定下载地址【必填项】
                         }],
-                        referer: this.file.url,
+                        referer: this.url,   //来源地址,防盗链
                     });
 
                 }
