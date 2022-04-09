@@ -21,6 +21,4 @@
 
 联系博主：[call](https://jq.qq.com/?_wv=1027&k=9VuiaL86)
 
-后续会开放自动化授权
-
 博客：[空城里](https://www.ilzya.com/)
