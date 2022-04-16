@@ -20,7 +20,7 @@ module.exports = (req,res) => {
 
     request.request(url,'GET','',header).then((result)=>{
         filename = str.subStringMulti(result,"' border='0' />","</h4>").toString()
-        filesize = "不支持获取该盘地址,不影响正常下载" //无
+        filesize = "不支持获取该盘文件大小,不影响正常下载" //无
         fileid = str.subStringMulti(result,"\nadd_ref(",");").toString().replace("(","").replace(")","")
         if(fileid == ''){
             res.send({
