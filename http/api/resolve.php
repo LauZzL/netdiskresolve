@@ -77,7 +77,7 @@
 
 
     //访问后端服务器
-    $result = request_by_curl('http://api.ilzya.com:1306/netdisk/doc/resolve_web',resetJSON($data,$serverUrl));
+    $result = request_by_curl('http://api.ilzya.com:1306/resolve',resetJSON($data,$serverUrl));
 
     echo $result;
     
