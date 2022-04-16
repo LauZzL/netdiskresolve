@@ -1,0 +1,7 @@
+{
+    "port":1306,
+    "log-server":false,
+    "v":"1.0.0",
+    "isrun":true,
+    "norunmessage":"这里是关闭接口提示的信息,isrun为false才会显示"
+}

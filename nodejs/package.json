@@ -1,0 +1,11 @@
+{
+  "name": "netdiskresolve",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "lzyAB",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.26.1",
+    "express": "^4.17.3"
+  }
+}
