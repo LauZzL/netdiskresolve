@@ -1,5 +1,5 @@
 <?php
-
+ 
     //获取请求url
     $serverUrl = $_SERVER["REQUEST_SCHEME"].'://'.$_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];
 
