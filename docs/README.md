@@ -21,3 +21,5 @@ Node版本的网盘下载辅助
 ` /nodejs `
 
 项目已完全开源
+
+相关文档：https://lzyab.github.io/netdiskresolve
