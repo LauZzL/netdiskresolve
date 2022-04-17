@@ -16,23 +16,12 @@
 
 
     /**
-     * 检测data数据
-     */
-    function checkenJson($type){
-        $jsonStr = json_decode($type,true);
-        if($jsonStr['link'] == ''){
-            return false;
-        }
-        return true;
-    }
-
-    /**
      * 获取错误信息
      * 如果检测data数据返回假那么执行该方法
      */
     function getError($type){
         $jsonStr = json_decode($type,true);
-        if($jsonStr['link'] == ''){
+        if($jsonStr['url'] == ''){
             echo '{"message":"请输入文件地址","success":"false"}';
             return false;
         }else{
@@ -45,6 +34,8 @@
 
     $data = file_get_contents('php://input'); //接收参数
 
+    $jsonStr = json_decode($data,true);
+    $sendData = "url=" . $jsonStr['url'];
 
 
     $aaaaaa = getError($data);
@@ -52,27 +43,6 @@
         return;
     }
 
-
-    /**
-     * 用于统计,若没特定需要请保留
-     */
-    function resetJSON($type,$s){
-        $tempArray = json_decode($type,true);
-        $jsonData = array();
-        $jsonData['domain'] = $s;
-        $jsonData['type'] = 'json';
-    
-        if($type!=''){
-            $tempArray = array_merge($tempArray, $jsonData);
-            $jsonData_merged = json_encode($tempArray);
-        }else{
-            $jsonData_merged = json_encode($jsonData);
-        }
-        
-        
-
-        return $jsonData_merged;
-    }
 
 
 
