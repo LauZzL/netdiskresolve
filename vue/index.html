@@ -182,13 +182,13 @@
                             url: '/http/api/resolve.php',
                             type: 'POST',
                             contentType: "application/json",
-                            data: '{"link": "' + this.url + '"}',
+                            data: '{"url": "' + this.url + '"}',
                             success: (res) => {
                                 res = JSON.parse(res);
                                 if (res.success == 'true') {
-                                    this.file.name = res.fileName;
-                                    this.file.size = res.fileSize;
-                                    this.file.id = res.fileId;
+                                    this.file.name = res.filename;
+                                    this.file.size = res.filesize;
+                                    this.file.id = res.fileid;
                                     this.file.durl = res.durl;
                                     this.$message({
                                         message: res.message,
