@@ -184,8 +184,9 @@
                             contentType: "application/json",
                             data: '{"url": "' + this.url + '"}',
                             success: (res) => {
+                                res = res.replace("1{","{");
                                 res = JSON.parse(res);
-                                if (res.success == 'true') {
+                                if (res.code == 0) {
                                     this.file.name = res.filename;
                                     this.file.size = res.filesize;
                                     this.file.id = res.fileid;
@@ -194,7 +195,7 @@
                                         message: res.message,
                                         type: 'success'
                                     });
-                                } else if (res.success == 'false') {
+                                } else if (res.code == -1) {
                                     this.$message.error(res.message);
                                 }
                             },
