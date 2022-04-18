@@ -184,6 +184,7 @@
                             contentType: "application/json",
                             data: '{"url": "' + this.url + '"}',
                             success: (res) => {
+                                //bug1 fix
                                 res = JSON.parse(res);
                                 if (res.code == 0) {
                                     this.file.name = res.filename;
