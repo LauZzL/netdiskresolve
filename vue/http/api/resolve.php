@@ -22,7 +22,8 @@
     function getError($type){
         $jsonStr = json_decode($type,true);
         if($jsonStr['url'] == ''){
-            echo '{"message":"请输入文件地址","success":"false"}';
+         //fix bug1
+            echo '{"message":"请输入文件地址","code":-1}';
             return false;
         }else{
             return true;
