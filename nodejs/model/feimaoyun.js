@@ -58,7 +58,7 @@ module.exports = (req,res) => {
                 fmdown = result.data.slice(-72)
 
 
-                request.request('https://www.feimaoyun.com/index.php/down/tdown','POST','code=' + fmdown + '&sc=1536*864&hd=0',header).then((result)=>{
+                request.request('https://www.feimaoyun.com/index.php/down/tdownv2','POST','code=' + fmdown + '&sc=1536*864&hd=0',header).then((result)=>{
                     if(result.status != 1){
                         res.send({
                             code:-1,
