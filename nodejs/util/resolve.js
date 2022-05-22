@@ -18,6 +18,7 @@ const _1988wp = require('../model/1988wp')
 const rosefile = require('../model/rosefile')
 const xingyaoyun = require('../model/xingyaoyun')
 const kufile = require('../model/kufile')
+const lanzou = require('../model/lanzou')
 
 
 module.exports = (req,res) =>{
@@ -31,7 +32,17 @@ module.exports = (req,res) =>{
         return
     }else{
         let urlReg = /[a-zA-Z0-9][-a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-a-zA-Z0-9]{0,62})+\.?/;
+        console.log(req.body.url);
         let domain=urlReg.exec(req.body.url);
+
+        //蓝奏云
+        if(domain[0].indexOf("lanzou") != -1){
+            lanzou(req,res)
+            return;
+        }
+
+
+
         switch(wpjson[domain[0]]){
             case 0:
                 feimaoyun(req,res)
@@ -78,7 +89,6 @@ module.exports = (req,res) =>{
             case 14:
                 kufile(req,res)
             break;
-
 
 
             default:
