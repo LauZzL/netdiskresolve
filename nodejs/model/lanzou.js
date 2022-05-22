@@ -21,13 +21,14 @@ module.exports = (req,res) => {
 
 
 
+
     let filename,filesize,fileid,fn,zturl,pwdsign
 
 
     /**
      * 密码解析
      */
-    if(pwd != '' || pwd != null){
+    if(pwd != '' && pwd != null && pwd != undefined){
 
         request.request(url,'GET').then(resp => {
 
@@ -38,7 +39,7 @@ module.exports = (req,res) => {
             if(pwdsign == ''){
                 res.send({
                     code:-1,
-                    message:'sign,请检查文件是否存在.'
+                    message:'获取sign失败,请检查文件是否存在.'
                 })
                 return
             }
