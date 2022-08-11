@@ -24,7 +24,7 @@ Node版本的网盘下载辅助
 
 相关文档：https://lzyab.github.io/netdiskresolve
 
-国内相关文档：http://docs.ilzya.com/#/
+国内相关文档：http://docs.ilzya.com/#/%E6%94%AF%E6%8C%81%E7%BD%91%E7%9B%98
 
 
 > 联系我
